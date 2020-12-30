@@ -1,0 +1,9 @@
+text_start.
+123
+text_end.
+text_start.
+123
+text_end.
+all_start.
+234
+all_end.
