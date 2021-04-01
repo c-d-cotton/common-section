@@ -11,7 +11,10 @@ __projectdir__ = Path(os.path.dirname(os.path.realpath(__file__)) + '')
 sys.path.append(str(__projectdir__ / 'submodules/infrep/'))
 from infrep_func import infrep_main
 
-# Main Function:{{{1
+sys.path.append(str(__projectdir__ / Path('submodules/argparse-fileinputs/')))
+from argparse_fileinputs import add_fileinputs
+from argparse_fileinputs import process_fileinputs
+
 def replacecommonsections(codelist, folder_commonsections, allextension = '.all'):
     """
         
@@ -51,8 +54,7 @@ def replacecommonsections(codelist, folder_commonsections, allextension = '.all'
     infrep_main(infreplist)
 
 
-# Test:{{{1
-def commonsectiontest():
+def replacecommonsections_test():
     if os.path.isdir(__projectdir__ / 'test'):
         shutil.rmtree(__projectdir__ / 'test')
 
@@ -89,3 +91,28 @@ def commonsectiontest():
             raise ValueError('Bad match for file2.txt')
 
 
+def replacecommonsections_ap():
+    """
+    Run the function on the command line
+    Get filelist inputs with the usual arguments
+    """
+
+    #Argparse:{{{
+    import argparse
+    
+    parser=argparse.ArgumentParser()
+
+    parser.add_argument("folder", help = "string path to directory containing the common sections")
+    parser = add_fileinputs(parser)
+    
+    args=parser.parse_args()
+    #End argparse:}}}
+
+    filelist = process_fileinputs(args.filename, args.files_asstring, args.files_aslines, args.files_infile, args.files_indir, args.files_inpwd)
+
+    replacecommonsections(filelist, args.folder)
+
+
+# Run:{{{1
+if __name__ == "__main__":
+    replacecommonsections_ap()
