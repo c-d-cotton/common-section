@@ -45,7 +45,7 @@ def replacecommonsections(codelist, folder_commonsections, allextension = '.all'
         if extension == '.all':
             codelist_extension = codelist
         else:
-            codelist_extension = [codefile for codefile in codelist if str(codefile).endswith(extension)]
+            codelist_extension = [codefile for codefile in codelist if str(codefile).endswith(extension) or str(codefile).endswith('.snippets')]
 
         inputterm = re.compile(re.escape(firstline) + "(.*?)" + re.escape(lastline) + '\n', re.DOTALL)
 
